@@ -1,0 +1,112 @@
+package com.tudoDeBom.Project.Service;
+
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tudoDeBom.Project.Model.ItemPedido;
+import com.tudoDeBom.Project.Model.Pedido;
+import com.tudoDeBom.Project.Model.Produto;
+import com.tudoDeBom.Project.Repository.PedidoRepository;
+import com.tudoDeBom.Project.Repository.ProdutoRepository;
+
+/**
+ * @author Caio Henrique Negrão da Silva
+ * @since 15/08/2022
+ * @version 1.0.0
+ * 
+ * @author Cristhiane Barros da Cruz
+ * @since 16/08/2022
+ * @version 1.0.1
+ */
+
+@Service
+public class PedidoService implements PedidoServiceInterface {
+
+	@Autowired
+	private PedidoRepository pedidoRepo;
+	
+	@Autowired
+	private ProdutoRepository produtoRepo;
+	
+	@Override
+	public Pedido recuperarPeloNumero(Integer numero) {
+		return pedidoRepo.findById(numero).orElse(null);
+}
+
+	@Override
+	public List<Pedido> listar() {
+		// TODO Auto-generated method stub
+		return (List<Pedido>)pedidoRepo.findAll();
+	}
+
+	@Override
+	public Pedido inserirNovo(Pedido novo) {
+		
+		
+		
+		Double preco = (double) 0; 
+		Double valorBruto = (double) 0;
+		Double valorLiquido = (double) 0;
+		
+		for(ItemPedido item: novo.getItens()) {
+			Double valorFormatado = (double) 0;
+			Produto produto = produtoRepo.encontrarPorId(item.getProduto().getIdProduto());
+			item.setPedido(novo);
+			
+			//Calculando o desconto de 20% para medicamentos genéricos e configurando o valor final do item
+			Double porcentagem = (Double) 0.2;
+			
+			//condicional if: aplica-se o desconto somente caso o produto seja genérico
+			if ("s".equals(produto.getFlagGenerico())) {
+				
+				Double somaGenerico = (double) 0;
+				for (int i=0; i <= item.getQuantidade(); i++) {
+					preco = preco + produto.getPreco() - (produto.getPreco() * porcentagem);
+					somaGenerico = somaGenerico + produto.getPreco();
+				}
+				//preco = produto.getPreco() * item.getQuantidade() - preco;
+				//arredondando o preço para apenas 2 casas decimais
+				preco = (double) (Math.round(preco*100.0)/100.0);
+				item.setPrecoFinal(preco);
+			} else {
+				//Caso não seja genérico, à variável 'preco' é adicionada apenas o valor integral do objeto 'produto'
+				//Double precoFinal = (double) 0;
+				for(int i=0; i <= item.getQuantidade(); i++) {
+					preco = preco + produto.getPreco();
+					preco = (double) (Math.round(preco*100.0)/100.0);
+				}
+				item.setPrecoFinal(preco);
+			}
+			
+			//Alterando a quantidade de produtos em estoque
+			produto.setEstoque(produto.getEstoque() - item.getQuantidade());
+			produtoRepo.save(produto);
+			 
+			//setando o preço unitário de cada item inserido no pedido
+			//item.setPrecoUnitario(produto.getPreco());
+			
+			//iterando sobre a lista de itens para setar o valor do atributo 'valorLiquido' do objeto 'novo'
+			valorLiquido = valorLiquido + item.getPrecoFinal();
+			
+			
+			//iterando sobre a lista de itens para setar o valor do atributo 'valorLiquido' do objeto 'novo'
+			valorBruto = valorBruto + produto.getPreco();
+			
+		}
+		novo.setValorBruto(valorBruto);
+		novo.setValorLiquido(valorLiquido);
+		//Setando o valor do atributo 'desconto' do objeto 'Pedido novo'
+		Double desconto = (double) 0;
+		if (valorBruto > valorLiquido) {
+			desconto = (valorBruto - valorLiquido);
+		}
+		novo.setDesconto(desconto);
+		
+		return pedidoRepo.save(novo);		
+	}
+	
+}
