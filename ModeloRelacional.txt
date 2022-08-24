@@ -1,7 +1,7 @@
 - Mapeamento apenas das entidades:
 	produto(**idProduto**,nomeProduto,descProduto,valorProduto,estoque)
 	departamento(**idDepartamento**,nomeDepartamento,descDepartamento)
-	cliente(**idCliente**,email, senha, cpf)
+	cliente(**idCliente**,nomeCliente,email, senha, cpf)
 	endereco(**numSequencial**,logradouro,numero,complemento,cep,estado,cidade,bairro,tipo)
 	pedido(**idPedido**,status,data,valorTotal,desconto,valorLiquido)
 
@@ -28,7 +28,7 @@
 
 -- Versão final
 
-cliente(**idCliente**,email, senha, cpf)
+cliente(**idCliente**,nomeCliente, email, senha, cpf)
 departamento(**idDepartamento**,nomeDepartamento,descDepartamento)
 produto(**idProduto**,nomeProduto,descProduto,valorProduto,estoque,**idDepartamento**)
 endereco(**numSequencial**,logradouro,numero,complemento,cep,estado,cidade,bairro,tipo, **idCliente**)
