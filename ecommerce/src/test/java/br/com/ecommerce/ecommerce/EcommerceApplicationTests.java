@@ -1,9 +1,9 @@
-package br.com.cassi.ecommerce;
+package br.com.ecommerce.ecommerce;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = EcommerceApplicationTests.class)
 class EcommerceApplicationTests {
 
 	@Test
