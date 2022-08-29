@@ -7,12 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EcommerceApplication {
 
 	public static void main(String[] args) {
-		
-		System.out.println("=================================================");
-		System.out.println("Inicialização Spring Boot Realizada com Sucesso!!");
-		System.out.println("=================================================");
-
-		//SpringApplication.run(EcommerceApplication.class, args);
+		SpringApplication.run(EcommerceApplication.class, args);
 	}
 
 }
