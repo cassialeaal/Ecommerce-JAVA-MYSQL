@@ -24,7 +24,7 @@ public class DepartamentoController {
     @GetMapping("/departamentos")
     public ArrayList<Departamento> listarTodos(){
 	   return service.listarTodos();
-   }
+    }
 
     @PostMapping("/departamentos")
     public ResponseEntity<Departamento> incluirNovo(@RequestBody Departamento novo){
