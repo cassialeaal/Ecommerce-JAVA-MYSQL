@@ -31,7 +31,7 @@ public class DepartamentoService implements IDepartamentoService {
     }
 
     @Override
-    public ArrayList<Departamento> buscarTodos() {
+    public ArrayList<Departamento> listarTodos() {
         return (ArrayList<Departamento>)dao.findAll();
     }
 

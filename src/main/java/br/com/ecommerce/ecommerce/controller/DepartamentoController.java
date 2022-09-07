@@ -2,7 +2,6 @@ package br.com.ecommerce.ecommerce.controller;
 
 import java.util.ArrayList;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,9 +22,9 @@ public class DepartamentoController {
     private IDepartamentoService service;
 
     @GetMapping("/departamentos")
-    public ArrayList<Departamento> buscarTodos(){
-        return service.buscarTodos();
-    }
+    public ArrayList<Departamento> listarTodos(){
+	   return service.listarTodos();
+   }
 
     @PostMapping("/departamentos")
     public ResponseEntity<Departamento> incluirNovo(@RequestBody Departamento novo){

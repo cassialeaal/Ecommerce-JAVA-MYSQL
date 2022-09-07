@@ -7,7 +7,7 @@ import br.com.ecommerce.ecommerce.model.Departamento;
 public interface IDepartamentoService {
     public Departamento criarNovo(Departamento novo);
     public Departamento atualizarDados(Departamento dados);
-    public ArrayList<Departamento> buscarTodos();
+    public ArrayList<Departamento> listarTodos();
     public Departamento buscarPeloId(Integer id);
     public void excluirDepartamento(Integer id);
 }
