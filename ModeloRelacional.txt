@@ -1,0 +1,53 @@
+- Mapeamento apenas das entidades:
+	produto(**idProduto**,nomeProduto,descProduto,valorProduto,estoque)
+	departamento(**idDepartamento**,nomeDepartamento,descDepartamento)
+	cliente(**idCliente**,nomeCliente,email, senha, cpf)
+	endereco(**numSequencial**,logradouro,numero,complemento,cep,estado,cidade,bairro,tipo)
+	pedido(**idPedido**,status,data,valorTotal,desconto,valorLiquido)
+
+- Analisar relações 1:1
+	Não existe esse tipo de relação neste modelo
+- Analisar relações 1:N
+	
+	Relação entre Cliente e Endereço:
+		endereco(**numSequencial**,logradouro,numero,complemento,cep,estado,cidade,bairro,tipo, **idCliente**)
+		[numSequencial é a chave primária e idCliente é a chave estrangeira que referencia Cliente.
+	Relação entre Cliente e Pedido:
+		pedido(**idPedido**,status,data,valorTotal,desconto,valorLiquido, **idCliente**)
+		[idPedido é a chave primaria e id Cliente é a chave estrangeira que referencia cliente.
+	Relação entre Produto e Departamento:
+		produto(**idProduto**,nomeProduto,descProduto,valorProduto,estoque,**idDepartamento**)
+		[idProduto é chave primaria e idDepartamento é chave estrangeira referenciando Departamento.
+
+- Analisar relações M:N
+
+	Relação entre Pedido e Produto:
+		possui(**idPedido**, **idProduto**, quantidade, valorUnitario, valorFinal)	
+		[ a combinação de idPedido e idProduto é uma chave estrangeira, enquanto separadamente são chaves estrangeiras]	
+
+
+-- Versão final
+
+cliente(**idCliente**,nomeCliente, email, senha, cpf)
+departamento(**idDepartamento**,nomeDepartamento,descDepartamento)
+produto(**idProduto**,nomeProduto,descProduto,valorProduto,estoque,**idDepartamento**)
+endereco(**numSequencial**,logradouro,numero,complemento,cep,estado,cidade,bairro,tipo, **idCliente**)
+pedido(**idPedido**,status,data,valorTotal,desconto,valorLiquido, **idCliente**)
+possui(**idPedido**, **idProduto**, quantidade, valorUnitario, valorFinal)
+
+=========================================================================================================
+
+Versão 2.0
+
+itemPedido(quantidade, valorUnitario,valorFinal)
+
+Relação entre itemPedido e Produto
+	itemPedido(quantidade, valorUnitario,valorFinal, **idProduto**)
+	[idProduto é chave estrangeira que referencia produto]
+Relação entre itemPedido e Pedido
+	itemPedido(quantidade, valorUnitario,valorFinal, **idProduto**,**idPedido**)
+	[idPedido é chave estrangeira que referencia pedido]
+
+
+itemPedido(**idItemPedido**,quantidade, valorUnitario,valorFinal, **idProduto**,**idPedido**)
+	[idItemPedido é chave primaria]

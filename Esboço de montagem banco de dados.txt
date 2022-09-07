@@ -1,0 +1,79 @@
+CREATE TABLE cliente(
+	id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(70) NOT NULL UNIQUE,
+	senha VARCHAR(20) NOT NULL,
+	cpf VARCHAR(15) NOT NULL UNIQUE
+);
+
+CREATE TABLE departamento(
+	numero INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(30) NOT NULL,
+	descricao TEXT
+);
+
+
+
+CREATE TABLE produto(
+	codigo INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	descricao TEXT,
+	preco DOUBLE,
+	estoque INTEGER,
+	num_depto INTEGER NOT NULL,
+	CONSTRAINT produto_depto FOREIGN KEY
+		(num_depto) REFERENCES departamento(numero)
+);
+
+CREATE TABLE endereco(
+	num_seq INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	tipo VARCHAR(5) NOT NULL,
+	logradouro VARCHAR(50) NOT NULL,
+	numero INTEGER,
+	complemento VARCHAR(20),
+	cep VARCHAR(10),
+	estado VARCHAR(2),
+	cidade VARCHAR(50),
+	bairro VARCHAR(30),
+	id_cliente INTEGER NOT NULL,
+	CONSTRAINT endereco_cliente FOREIGN KEY
+		(id_cliente) REFERENCES cliente(id)
+);
+
+
+CREATE TABLE pedido(
+	numPedido INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	status VARCHAR(1) NOT NULL,
+	data DATE,
+	valorTotal DOUBLE ,
+	desconto DOUBLE,
+	valorLiquido DOUBLE,
+	id_cliente INTEGER NOT NULL,
+	CONSTRAINT cliente_pedido FOREIGN KEY
+		(id_cliente) REFERENCES cliente(id)
+);
+
+
+CREATE TABLE itemPedido(
+	seq INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	quantidade INTEGER,
+	valorUnitario DOUBLE,
+	valorFinal DOUBLE,
+	codigo_produto INTEGER NOT NULL,
+	numero_pedido INTEGER NOT NULL,
+	
+	CONSTRAINT item_produto FOREIGN KEY (codigo_produto) REFERENCES produto(codigo),
+	CONSTRAINT item_pedido FOREIGN KEY (numero_pedido) REFERENCES pedido(numPedido)
+	
+);
+
+
+
+
+
+
+
+
+
+
+
