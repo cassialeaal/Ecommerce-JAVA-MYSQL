@@ -1,5 +1,6 @@
 package br.com.ecommerce.ecommerce.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 @Entity
 @Table(name = "pedido")
@@ -21,9 +21,6 @@ public class Pedido {
     
     @Column(name = "status", length = 1, nullable = false)
     public String status;
-
-    //@Column(name = "data")
-    private Date data;
 
     @Column(name = "valorTotal")
     private Double valorTotal;
