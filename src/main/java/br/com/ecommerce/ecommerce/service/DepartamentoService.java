@@ -16,13 +16,17 @@ public class DepartamentoService implements IDepartamentoService {
 
     @Override
     public Departamento criarNovo(Departamento novo) {
-        // TODO Auto-generated method stub
+        if(novo.getNome()!= null){
+            return dao.save(novo);
+        }
         return null;
     }
 
     @Override
     public Departamento atualizarDados(Departamento dados) {
-        // TODO Auto-generated method stub
+        if(dados.getIdDepto()!=null && dados.getNome()!=null){
+            return dao.save(dados);
+        }
         return null;
     }
 
@@ -33,14 +37,12 @@ public class DepartamentoService implements IDepartamentoService {
 
     @Override
     public Departamento buscarPeloId(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+        return dao.findById(id).orElse(null);
     }
 
     @Override
     public void excluirDepartamento(Integer id) {
-        // TODO Auto-generated method stub
-        
+        dao.deleteById(id);
     }
 
 }
