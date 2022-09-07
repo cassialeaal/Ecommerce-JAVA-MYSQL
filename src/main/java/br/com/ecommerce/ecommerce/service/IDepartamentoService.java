@@ -11,3 +11,4 @@ public interface IDepartamentoService {
     public Departamento buscarPeloId(Integer id);
     public void excluirDepartamento(Integer id);
 }
+
