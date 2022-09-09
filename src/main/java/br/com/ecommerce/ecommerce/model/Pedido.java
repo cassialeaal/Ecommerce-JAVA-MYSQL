@@ -1,5 +1,7 @@
 package br.com.ecommerce.ecommerce.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,9 @@ public class Pedido {
 
     @Column(name = "desconto")
     private Double desconto;
+
+    @Column(name = "data")
+    private LocalDate data;
 
     @Column(name = "valorLiquido")
     private Double valorLiq;
